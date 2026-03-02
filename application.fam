@@ -1,6 +1,6 @@
 App(
     appid="puff_pacer",
-    name="PuffPacer",
+    name="123PuffPacer",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="puff_pacer_app",
     stack_size=2 * 1024,
