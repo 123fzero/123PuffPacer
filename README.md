@@ -10,25 +10,38 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
 
 - **Configurable puff count** — 8 to 20 puffs per session (default: 14)
 - **Configurable interval** — 15 to 40 seconds between puffs (default: 25s)
-- **Vibration + beep alert** on each puff interval
+- **Vibration control** — Off / Short / Long
+- **Sound control** — Off / On
 - **Live session screen** — puff counter, countdown timer, elapsed time, progress bar
 - **Pause/resume** with OK button
 - **Persistent settings** — saved to SD card, remembered between launches
 - **Backlight stays on** during active session
+- **About screen** with version info and links
 
 ## Screenshots
 
 ```
-┌──────────────────────────┐    ┌──────────────────────────┐
-│    PuffPacer             │    │ PuffPacer        02:15   │
-│                          │    │                          │
-│  > Start Session         │    │     Puff 3 / 14          │
-│    Settings              │    │     Next in: 18s         │
-│                          │    │                          │
-│                          │    │  [███████░░░░░░░]        │
-│                          │    │ [OK]=Pause  [<]=Exit     │
-└──────────────────────────┘    └──────────────────────────┘
-       Main Menu                      Session Screen
+┌────────────────────────────┐   ┌────────────────────────────┐
+│      PuffPacer             │   │ Puff Count          < 14 > │
+│                            │   │ Interval            < 25s >│
+│  > Start Session           │   │ Vibration         < Short >│
+│    Settings                │   │ Sound                < On >│
+│    About                   │   │                            │
+│                            │   │                            │
+│                            │   │                            │
+└────────────────────────────┘   └────────────────────────────┘
+         Main Menu                         Settings
+
+┌────────────────────────────┐   ┌────────────────────────────┐
+│ PuffPacer          02:15   │   │                            │
+│                            │   │                            │
+│       Puff 3 / 14          │   │         Session            │
+│       Next in: 18s         │   │        Complete!            │
+│                            │   │                            │
+│    [███████░░░░░░░]        │   │           [OK]              │
+│ [OK]=Pause    [<]=Exit     │   │                            │
+└────────────────────────────┘   └────────────────────────────┘
+        Session Screen                   Done Screen
 ```
 
 ## Compatible Devices
@@ -57,8 +70,8 @@ Works with any heated tobacco / heat-not-burn device:
 pip install ufbt
 
 # Clone and build
-git clone https://github.com/your-username/puff-pacer-flipper.git
-cd puff-pacer-flipper
+git clone https://github.com/123fzero/123PuffPacer.git
+cd 123PuffPacer
 ufbt
 
 # Build and launch on connected Flipper
@@ -68,9 +81,9 @@ ufbt launch
 ## Usage
 
 1. Open PuffPacer from Applications → Tools
-2. (Optional) Go to **Settings** to adjust puff count and interval
+2. (Optional) Go to **Settings** to adjust puff count, interval, vibration, and sound
 3. Select **Start Session**
-4. Flipper vibrates + beeps on each interval — take a puff!
+4. Flipper alerts you on each interval — take a puff!
 5. Press **OK** to pause/resume, **Back** to exit
 6. After all puffs — "Session Complete!" screen
 
