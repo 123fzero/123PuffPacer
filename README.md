@@ -95,6 +95,14 @@ ufbt launch
 | Back | Go back / Exit session |
 | Left/Right | Change settings values |
 
+## Tested On
+
+- **Firmware:** Momentum (mntm-012)
+- **API:** 87.1
+- **Hardware:** Flipper Zero (f7)
+
+Should also work on official firmware and other custom firmwares (Unleashed, RogueMaster, Xtreme) with compatible API versions.
+
 ## License
 
 MIT
