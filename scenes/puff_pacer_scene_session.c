@@ -27,8 +27,7 @@ void puff_pacer_scene_session_on_enter(void* context) {
     notification_message(app->notifications, &sequence_single_vibro);
 
     // Start timer
-    app->timer =
-        furi_timer_alloc(puff_pacer_session_timer_callback, FuriTimerTypePeriodic, app);
+    app->timer = furi_timer_alloc(puff_pacer_session_timer_callback, FuriTimerTypePeriodic, app);
     furi_timer_start(app->timer, furi_kernel_get_tick_frequency());
 
     // Keep backlight on

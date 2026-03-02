@@ -28,8 +28,7 @@ void puff_pacer_scene_main_menu_on_enter(void* context) {
         puff_pacer_scene_main_menu_callback,
         app);
     submenu_set_selected_item(
-        app->submenu,
-        scene_manager_get_scene_state(app->scene_manager, PuffPacerSceneMainMenu));
+        app->submenu, scene_manager_get_scene_state(app->scene_manager, PuffPacerSceneMainMenu));
     view_dispatcher_switch_to_view(app->view_dispatcher, PuffPacerViewSubmenu);
 }
 
@@ -38,8 +37,7 @@ bool puff_pacer_scene_main_menu_on_event(void* context, SceneManagerEvent event)
     bool consumed = false;
 
     if(event.type == SceneManagerEventTypeCustom) {
-        scene_manager_set_scene_state(
-            app->scene_manager, PuffPacerSceneMainMenu, event.event);
+        scene_manager_set_scene_state(app->scene_manager, PuffPacerSceneMainMenu, event.event);
         switch(event.event) {
         case PuffPacerMainMenuIndexStart:
             scene_manager_next_scene(app->scene_manager, PuffPacerSceneSession);

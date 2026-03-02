@@ -10,8 +10,7 @@ bool puff_pacer_settings_save(const PuffPacerSettings* settings) {
 
     do {
         if(!flipper_format_file_open_always(ff, SETTINGS_FILE_PATH)) break;
-        if(!flipper_format_write_header_cstr(ff, SETTINGS_FILE_TYPE, SETTINGS_FILE_VERSION))
-            break;
+        if(!flipper_format_write_header_cstr(ff, SETTINGS_FILE_TYPE, SETTINGS_FILE_VERSION)) break;
         if(!flipper_format_write_uint32(ff, "PuffCount", &settings->puff_count, 1)) break;
         if(!flipper_format_write_uint32(ff, "IntervalSec", &settings->interval_sec, 1)) break;
         success = true;

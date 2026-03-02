@@ -55,8 +55,7 @@ static PuffPacerApp* puff_pacer_alloc(void) {
     // Session view
     app->session_view = puff_session_view_alloc();
     view_set_context(app->session_view, app);
-    view_dispatcher_add_view(
-        app->view_dispatcher, PuffPacerViewSession, app->session_view);
+    view_dispatcher_add_view(app->view_dispatcher, PuffPacerViewSession, app->session_view);
 
     return app;
 }

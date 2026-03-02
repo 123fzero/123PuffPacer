@@ -5,8 +5,7 @@ static void
     puff_pacer_scene_done_button_callback(GuiButtonType result, InputType type, void* context) {
     PuffPacerApp* app = context;
     if(type == InputTypeShort && result == GuiButtonTypeCenter) {
-        view_dispatcher_send_custom_event(
-            app->view_dispatcher, PuffPacerCustomEventMenuSelected);
+        view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventMenuSelected);
     }
 }
 
