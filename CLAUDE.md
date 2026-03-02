@@ -1,25 +1,30 @@
-# PuffPacer — Flipper Zero App
+# 123PuffPacer — Flipper Zero App
 
 Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar).
 
 ## What It Does
 - Configurable puff count (8-20, default 14) and interval (15-40s, default 25s)
-- Vibration + beep alert each interval
+- Vibration control: Off / Short / Long
+- Sound control: Off / On
 - Live session screen: puff counter, countdown, elapsed time, progress bar
 - Pause/resume with OK button, exit with Back
 - Auto-stop after all puffs complete
 - Settings persisted to SD card
+- About screen with author and GitHub link
 
 ## Technical Details
 - Flipper Zero, SDK (ufbt), API 87.1
+- Firmware tested: Momentum mntm-012
 - Language: C
 - Architecture: ViewDispatcher + SceneManager
-- Widgets: Submenu (menu), VariableItemList (settings), custom View (session), Widget (done)
+- 5 scenes: MainMenu, Settings, Session, Done, About
+- Widgets: Submenu (menu), VariableItemList (settings), custom View (session), Widget (done/about)
 - Timer: FuriTimer periodic 1s
-- Notifications: custom sequence (vibro + beep via notification_message)
-- Settings: FlipperFormat at /ext/apps_data/puff_pacer/settings.conf
+- Notifications: separate vibro and sound sequences, configurable
+- Settings: FlipperFormat v2 at /ext/apps_data/puff_pacer/settings.conf
 - Category: Tools
 - appid: puff_pacer
+- Icon: 10x10 stopwatch
 
 ## Build
 ```bash
