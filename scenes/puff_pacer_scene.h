@@ -7,6 +7,7 @@ typedef enum {
     PuffPacerSceneSettings,
     PuffPacerSceneSession,
     PuffPacerSceneDone,
+    PuffPacerSceneAbout,
     PuffPacerSceneCount,
 } PuffPacerScene;
 
