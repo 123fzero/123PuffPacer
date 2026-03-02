@@ -13,6 +13,8 @@ bool puff_pacer_settings_save(const PuffPacerSettings* settings) {
         if(!flipper_format_write_header_cstr(ff, SETTINGS_FILE_TYPE, SETTINGS_FILE_VERSION)) break;
         if(!flipper_format_write_uint32(ff, "PuffCount", &settings->puff_count, 1)) break;
         if(!flipper_format_write_uint32(ff, "IntervalSec", &settings->interval_sec, 1)) break;
+        if(!flipper_format_write_uint32(ff, "VibroMode", &settings->vibro_mode, 1)) break;
+        if(!flipper_format_write_uint32(ff, "SoundMode", &settings->sound_mode, 1)) break;
         success = true;
     } while(false);
 
@@ -24,6 +26,8 @@ bool puff_pacer_settings_save(const PuffPacerSettings* settings) {
 bool puff_pacer_settings_load(PuffPacerSettings* settings) {
     settings->puff_count = PUFF_COUNT_DEFAULT;
     settings->interval_sec = INTERVAL_SEC_DEFAULT;
+    settings->vibro_mode = PuffPacerVibroShort;
+    settings->sound_mode = PuffPacerSoundOn;
 
     Storage* storage = furi_record_open(RECORD_STORAGE);
     FlipperFormat* ff = flipper_format_file_alloc(storage);
@@ -47,6 +51,8 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
 
         flipper_format_read_uint32(ff, "PuffCount", &settings->puff_count, 1);
         flipper_format_read_uint32(ff, "IntervalSec", &settings->interval_sec, 1);
+        flipper_format_read_uint32(ff, "VibroMode", &settings->vibro_mode, 1);
+        flipper_format_read_uint32(ff, "SoundMode", &settings->sound_mode, 1);
 
         // Clamp to valid ranges
         if(settings->puff_count < PUFF_COUNT_MIN || settings->puff_count > PUFF_COUNT_MAX) {
@@ -54,6 +60,12 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
         }
         if(settings->interval_sec < INTERVAL_SEC_MIN || settings->interval_sec > INTERVAL_SEC_MAX) {
             settings->interval_sec = INTERVAL_SEC_DEFAULT;
+        }
+        if(settings->vibro_mode >= PuffPacerVibroCount) {
+            settings->vibro_mode = PuffPacerVibroShort;
+        }
+        if(settings->sound_mode >= PuffPacerSoundCount) {
+            settings->sound_mode = PuffPacerSoundOn;
         }
 
         success = true;

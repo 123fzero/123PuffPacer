@@ -2,6 +2,9 @@
 #include "puff_pacer_scene.h"
 #include <stdio.h>
 
+static const char* const vibro_labels[] = {"Off", "Short", "Long"};
+static const char* const sound_labels[] = {"Off", "On"};
+
 static void puff_pacer_scene_settings_puff_count_changed(VariableItem* item) {
     PuffPacerApp* app = variable_item_get_context(item);
     uint8_t index = variable_item_get_current_value_index(item);
@@ -24,6 +27,26 @@ static void puff_pacer_scene_settings_interval_changed(VariableItem* item) {
     char buf[8];
     snprintf(buf, sizeof(buf), "%lus", (unsigned long)value);
     variable_item_set_current_value_text(item, buf);
+
+    puff_pacer_settings_save(&app->settings);
+}
+
+static void puff_pacer_scene_settings_vibro_changed(VariableItem* item) {
+    PuffPacerApp* app = variable_item_get_context(item);
+    uint8_t index = variable_item_get_current_value_index(item);
+    app->settings.vibro_mode = index;
+
+    variable_item_set_current_value_text(item, vibro_labels[index]);
+
+    puff_pacer_settings_save(&app->settings);
+}
+
+static void puff_pacer_scene_settings_sound_changed(VariableItem* item) {
+    PuffPacerApp* app = variable_item_get_context(item);
+    uint8_t index = variable_item_get_current_value_index(item);
+    app->settings.sound_mode = index;
+
+    variable_item_set_current_value_text(item, sound_labels[index]);
 
     puff_pacer_settings_save(&app->settings);
 }
@@ -60,6 +83,26 @@ void puff_pacer_scene_settings_on_enter(void* context) {
     variable_item_set_current_value_index(item, interval_index);
     snprintf(buf, sizeof(buf), "%lus", (unsigned long)app->settings.interval_sec);
     variable_item_set_current_value_text(item, buf);
+
+    // Vibration: Off / Short / Long
+    item = variable_item_list_add(
+        app->variable_item_list,
+        "Vibration",
+        PuffPacerVibroCount,
+        puff_pacer_scene_settings_vibro_changed,
+        app);
+    variable_item_set_current_value_index(item, app->settings.vibro_mode);
+    variable_item_set_current_value_text(item, vibro_labels[app->settings.vibro_mode]);
+
+    // Sound: Off / On
+    item = variable_item_list_add(
+        app->variable_item_list,
+        "Sound",
+        PuffPacerSoundCount,
+        puff_pacer_scene_settings_sound_changed,
+        app);
+    variable_item_set_current_value_index(item, app->settings.sound_mode);
+    variable_item_set_current_value_text(item, sound_labels[app->settings.sound_mode]);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, PuffPacerViewVariableItemList);
 }

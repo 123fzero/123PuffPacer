@@ -13,11 +13,26 @@
 
 #define SETTINGS_FILE_PATH    APP_DATA_PATH("settings.conf")
 #define SETTINGS_FILE_TYPE    "PuffPacer Settings"
-#define SETTINGS_FILE_VERSION 1
+#define SETTINGS_FILE_VERSION 2
+
+typedef enum {
+    PuffPacerVibroOff,
+    PuffPacerVibroShort,
+    PuffPacerVibroLong,
+    PuffPacerVibroCount,
+} PuffPacerVibroMode;
+
+typedef enum {
+    PuffPacerSoundOff,
+    PuffPacerSoundOn,
+    PuffPacerSoundCount,
+} PuffPacerSoundMode;
 
 typedef struct {
     uint32_t puff_count;
     uint32_t interval_sec;
+    uint32_t vibro_mode;
+    uint32_t sound_mode;
 } PuffPacerSettings;
 
 bool puff_pacer_settings_load(PuffPacerSettings* settings);

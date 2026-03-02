@@ -2,15 +2,42 @@
 #include "../views/puff_session_view.h"
 #include "puff_pacer_scene.h"
 
-// Custom notification: vibration + beep
-static const NotificationSequence sequence_puff_alert = {
+// Vibration sequences
+static const NotificationSequence sequence_vibro_short = {
     &message_vibro_on,
-    &message_note_c7,
     &message_delay_100,
-    &message_sound_off,
     &message_vibro_off,
     NULL,
 };
+
+static const NotificationSequence sequence_vibro_long = {
+    &message_vibro_on,
+    &message_delay_500,
+    &message_vibro_off,
+    NULL,
+};
+
+// Sound sequence
+static const NotificationSequence sequence_beep = {
+    &message_note_c7,
+    &message_delay_100,
+    &message_sound_off,
+    NULL,
+};
+
+static void puff_pacer_send_alert(PuffPacerApp* app) {
+    // Vibration
+    if(app->settings.vibro_mode == PuffPacerVibroShort) {
+        notification_message(app->notifications, &sequence_vibro_short);
+    } else if(app->settings.vibro_mode == PuffPacerVibroLong) {
+        notification_message(app->notifications, &sequence_vibro_long);
+    }
+
+    // Sound
+    if(app->settings.sound_mode == PuffPacerSoundOn) {
+        notification_message(app->notifications, &sequence_beep);
+    }
+}
 
 static void puff_pacer_session_timer_callback(void* context) {
     PuffPacerApp* app = context;
@@ -34,7 +61,7 @@ void puff_pacer_scene_session_on_enter(void* context) {
         true);
 
     // First puff notification
-    notification_message(app->notifications, &sequence_puff_alert);
+    puff_pacer_send_alert(app);
 
     // Start timer
     app->timer = furi_timer_alloc(puff_pacer_session_timer_callback, FuriTimerTypePeriodic, app);
@@ -79,7 +106,7 @@ bool puff_pacer_scene_session_on_event(void* context, SceneManagerEvent event) {
                 notification_message(app->notifications, &sequence_success);
                 scene_manager_next_scene(app->scene_manager, PuffPacerSceneDone);
             } else if(new_puff) {
-                notification_message(app->notifications, &sequence_puff_alert);
+                puff_pacer_send_alert(app);
             }
             consumed = true;
         }
