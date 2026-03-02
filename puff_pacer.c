@@ -1,5 +1,6 @@
 #include "puff_pacer_app.h"
 #include "scenes/puff_pacer_scene.h"
+#include "views/puff_session_view.h"
 
 static bool puff_pacer_custom_event_callback(void* context, uint32_t event) {
     PuffPacerApp* app = context;
@@ -51,8 +52,11 @@ static PuffPacerApp* puff_pacer_alloc(void) {
     // Timer (will be started/stopped per session)
     app->timer = NULL;
 
-    // Session view placeholder (will be set up in Task 5)
-    app->session_view = NULL;
+    // Session view
+    app->session_view = puff_session_view_alloc();
+    view_set_context(app->session_view, app);
+    view_dispatcher_add_view(
+        app->view_dispatcher, PuffPacerViewSession, app->session_view);
 
     return app;
 }
@@ -65,6 +69,9 @@ static void puff_pacer_free(PuffPacerApp* app) {
     }
 
     // Views
+    view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewSession);
+    puff_session_view_free(app->session_view);
+
     view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewSubmenu);
     submenu_free(app->submenu);
 
