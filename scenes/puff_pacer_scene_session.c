@@ -2,6 +2,16 @@
 #include "../views/puff_session_view.h"
 #include "puff_pacer_scene.h"
 
+// Custom notification: vibration + beep
+static const NotificationSequence sequence_puff_alert = {
+    &message_vibro_on,
+    &message_note_c7,
+    &message_delay_100,
+    &message_sound_off,
+    &message_vibro_off,
+    NULL,
+};
+
 static void puff_pacer_session_timer_callback(void* context) {
     PuffPacerApp* app = context;
     view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventTimerTick);
@@ -24,7 +34,7 @@ void puff_pacer_scene_session_on_enter(void* context) {
         true);
 
     // First puff notification
-    notification_message(app->notifications, &sequence_single_vibro);
+    notification_message(app->notifications, &sequence_puff_alert);
 
     // Start timer
     app->timer = furi_timer_alloc(puff_pacer_session_timer_callback, FuriTimerTypePeriodic, app);
@@ -65,10 +75,11 @@ bool puff_pacer_scene_session_on_event(void* context, SceneManagerEvent event) {
                 true);
 
             if(session_done) {
+                furi_timer_stop(app->timer);
                 notification_message(app->notifications, &sequence_success);
                 scene_manager_next_scene(app->scene_manager, PuffPacerSceneDone);
             } else if(new_puff) {
-                notification_message(app->notifications, &sequence_single_vibro);
+                notification_message(app->notifications, &sequence_puff_alert);
             }
             consumed = true;
         }

@@ -47,6 +47,15 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
 
         flipper_format_read_uint32(ff, "PuffCount", &settings->puff_count, 1);
         flipper_format_read_uint32(ff, "IntervalSec", &settings->interval_sec, 1);
+
+        // Clamp to valid ranges
+        if(settings->puff_count < PUFF_COUNT_MIN || settings->puff_count > PUFF_COUNT_MAX) {
+            settings->puff_count = PUFF_COUNT_DEFAULT;
+        }
+        if(settings->interval_sec < INTERVAL_SEC_MIN || settings->interval_sec > INTERVAL_SEC_MAX) {
+            settings->interval_sec = INTERVAL_SEC_DEFAULT;
+        }
+
         success = true;
     } while(false);
 
