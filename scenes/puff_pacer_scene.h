@@ -14,6 +14,7 @@ typedef enum {
 typedef enum {
     PuffPacerCustomEventMenuSelected,
     PuffPacerCustomEventTimerTick,
+    PuffPacerCustomEventResetSettings,
 } PuffPacerCustomEvent;
 
 extern const SceneManagerHandlers puff_pacer_scene_handlers;

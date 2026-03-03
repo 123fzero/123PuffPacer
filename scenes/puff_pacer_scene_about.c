@@ -11,7 +11,7 @@ void puff_pacer_scene_about_on_enter(void* context) {
         0,
         128,
         64,
-        "PuffPacer v1.0\n"
+        "123PuffPacer v1.1.0\n"
         "Puff interval timer\n"
         "for Flipper Zero\n\n"
         "Author: 123fzero\n"

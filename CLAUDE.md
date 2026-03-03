@@ -3,10 +3,12 @@
 Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar).
 
 ## What It Does
-- Configurable puff count (8-20, default 14) and interval (15-40s, default 25s)
+- Configurable puff count (8-20, default 12) and interval (10-40s, default 25s)
 - Vibration control: Off / Short / Long
 - Sound control: Off / On
+- Smoke animation on each puff (5 seconds, procedural S-wisps on both sides)
 - Live session screen: puff counter, countdown, elapsed time, progress bar
+- Reset Settings option in settings menu
 - Pause/resume with OK button, exit with Back
 - Auto-stop after all puffs complete
 - Settings persisted to SD card
@@ -24,7 +26,8 @@ Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar)
 - Settings: FlipperFormat v2 at /ext/apps_data/puff_pacer/settings.conf
 - Category: Tools
 - appid: puff_pacer
-- Icon: 10x10 stopwatch
+- Icon: 10x10 smoke cloud
+- Versioning: semver (tag + GitHub release)
 
 ## Build
 ```bash

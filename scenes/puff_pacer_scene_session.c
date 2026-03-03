@@ -57,6 +57,8 @@ void puff_pacer_scene_session_on_enter(void* context) {
             m->seconds_remaining = app->settings.interval_sec;
             m->total_elapsed = 0;
             m->paused = false;
+            m->smoke_timer = 5;
+            m->smoke_frame = 0;
         },
         true);
 
@@ -86,6 +88,10 @@ bool puff_pacer_scene_session_on_event(void* context, SceneManagerEvent event) {
                 PuffSessionModel * m,
                 {
                     m->total_elapsed++;
+                    if(m->smoke_timer > 0) {
+                        m->smoke_timer--;
+                        m->smoke_frame++;
+                    }
                     if(m->seconds_remaining > 0) {
                         m->seconds_remaining--;
                     }
@@ -95,6 +101,8 @@ bool puff_pacer_scene_session_on_event(void* context, SceneManagerEvent event) {
                         } else {
                             m->current_puff++;
                             m->seconds_remaining = app->settings.interval_sec;
+                            m->smoke_timer = 5;
+                            m->smoke_frame = 0;
                             new_puff = true;
                         }
                     }

@@ -5,9 +5,9 @@
 
 #define PUFF_COUNT_MIN     8
 #define PUFF_COUNT_MAX     20
-#define PUFF_COUNT_DEFAULT 14
+#define PUFF_COUNT_DEFAULT 12
 
-#define INTERVAL_SEC_MIN     15
+#define INTERVAL_SEC_MIN     10
 #define INTERVAL_SEC_MAX     40
 #define INTERVAL_SEC_DEFAULT 25
 

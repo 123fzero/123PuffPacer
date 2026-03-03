@@ -5,6 +5,15 @@
 static const char* const vibro_labels[] = {"Off", "Short", "Long"};
 static const char* const sound_labels[] = {"Off", "On"};
 
+#define SETTINGS_ITEM_RESET 4
+
+static void puff_pacer_scene_settings_enter_callback(void* context, uint32_t index) {
+    PuffPacerApp* app = context;
+    if(index == SETTINGS_ITEM_RESET) {
+        view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventResetSettings);
+    }
+}
+
 static void puff_pacer_scene_settings_puff_count_changed(VariableItem* item) {
     PuffPacerApp* app = variable_item_get_context(item);
     uint8_t index = variable_item_get_current_value_index(item);
@@ -104,12 +113,29 @@ void puff_pacer_scene_settings_on_enter(void* context) {
     variable_item_set_current_value_index(item, app->settings.sound_mode);
     variable_item_set_current_value_text(item, sound_labels[app->settings.sound_mode]);
 
+    // Reset Settings (no value options, action on OK press)
+    variable_item_list_add(app->variable_item_list, "Reset Settings", 0, NULL, app);
+
+    variable_item_list_set_enter_callback(
+        app->variable_item_list, puff_pacer_scene_settings_enter_callback, app);
+
     view_dispatcher_switch_to_view(app->view_dispatcher, PuffPacerViewVariableItemList);
 }
 
 bool puff_pacer_scene_settings_on_event(void* context, SceneManagerEvent event) {
-    UNUSED(context);
-    UNUSED(event);
+    PuffPacerApp* app = context;
+    if(event.type == SceneManagerEventTypeCustom &&
+       event.event == PuffPacerCustomEventResetSettings) {
+        app->settings.puff_count = PUFF_COUNT_DEFAULT;
+        app->settings.interval_sec = INTERVAL_SEC_DEFAULT;
+        app->settings.vibro_mode = PuffPacerVibroShort;
+        app->settings.sound_mode = PuffPacerSoundOn;
+        puff_pacer_settings_save(&app->settings);
+        // Re-enter scene to refresh UI
+        scene_manager_previous_scene(app->scene_manager);
+        scene_manager_next_scene(app->scene_manager, PuffPacerSceneSettings);
+        return true;
+    }
     return false;
 }
 

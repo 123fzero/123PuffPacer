@@ -8,6 +8,8 @@ typedef struct {
     uint32_t seconds_remaining;
     uint32_t total_elapsed;
     bool paused;
+    uint8_t smoke_timer;
+    uint8_t smoke_frame;
 } PuffSessionModel;
 
 View* puff_session_view_alloc(void);

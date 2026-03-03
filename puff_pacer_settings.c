@@ -58,7 +58,8 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
         if(settings->puff_count < PUFF_COUNT_MIN || settings->puff_count > PUFF_COUNT_MAX) {
             settings->puff_count = PUFF_COUNT_DEFAULT;
         }
-        if(settings->interval_sec < INTERVAL_SEC_MIN || settings->interval_sec > INTERVAL_SEC_MAX) {
+        if(settings->interval_sec < INTERVAL_SEC_MIN ||
+           settings->interval_sec > INTERVAL_SEC_MAX) {
             settings->interval_sec = INTERVAL_SEC_DEFAULT;
         }
         if(settings->vibro_mode >= PuffPacerVibroCount) {

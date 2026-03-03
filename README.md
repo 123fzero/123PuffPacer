@@ -1,19 +1,21 @@
-# PuffPacer — Puff Interval Timer for Flipper Zero
+# 123PuffPacer — Puff Interval Timer for Flipper Zero
 
 Interval puff timer for heated tobacco devices (IQOS, Lil Solid, glo, Ploom, etc.). Helps you pace your puffs evenly throughout a session with vibration and sound alerts.
 
 ## Why?
 
-Heated tobacco sticks have a limited number of puffs and a fixed session time. If you puff too fast, you waste the stick. PuffPacer divides your session into equal intervals and alerts you when it's time for the next puff — so you get the most out of every stick.
+Heated tobacco sticks have a limited number of puffs and a fixed session time. If you puff too fast, you waste the stick. 123PuffPacer divides your session into equal intervals and alerts you when it's time for the next puff — so you get the most out of every stick.
 
 ## Features
 
-- **Configurable puff count** — 8 to 20 puffs per session (default: 14)
-- **Configurable interval** — 15 to 40 seconds between puffs (default: 25s)
+- **Configurable puff count** — 8 to 20 puffs per session (default: 12)
+- **Configurable interval** — 10 to 40 seconds between puffs (default: 25s)
 - **Vibration control** — Off / Short / Long
 - **Sound control** — Off / On
+- **Smoke animation** — procedural smoke wisps on each puff for 5 seconds
 - **Live session screen** — puff counter, countdown timer, elapsed time, progress bar
 - **Pause/resume** with OK button
+- **Reset settings** — one-click reset to defaults
 - **Persistent settings** — saved to SD card, remembered between launches
 - **Backlight stays on** during active session
 - **About screen** with version info and links
@@ -22,26 +24,26 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
 
 ```
 ┌────────────────────────────┐   ┌────────────────────────────┐
-│      PuffPacer             │   │ Puff Count          < 14 > │
+│      123PuffPacer          │   │ Puff Count          < 12 > │
 │                            │   │ Interval            < 25s >│
 │  > Start Session           │   │ Vibration         < Short >│
 │    Settings                │   │ Sound                < On >│
-│    About                   │   │                            │
+│    About                   │   │ Reset Settings              │
 │                            │   │                            │
 │                            │   │                            │
 └────────────────────────────┘   └────────────────────────────┘
          Main Menu                         Settings
 
 ┌────────────────────────────┐   ┌────────────────────────────┐
-│ PuffPacer          02:15   │   │                            │
-│                            │   │                            │
-│       Puff 3 / 14          │   │         Session            │
-│       Next in: 18s         │   │        Complete!            │
-│                            │   │                            │
-│    [███████░░░░░░░]        │   │           [OK]              │
+│ 123PuffPacer       00:03   │   │                            │
+│ ~                      ~ ~ │   │                            │
+│  ~    Puff 1 / 12    ~     │   │         Session            │
+│   ~   Next in: 22s    ~    │   │        Complete!            │
+│ ~                      ~   │   │                            │
+│    [░░░░░░░░░░░░░░░]       │   │           [OK]              │
 │ [OK]=Pause    [<]=Exit     │   │                            │
 └────────────────────────────┘   └────────────────────────────┘
-        Session Screen                   Done Screen
+    Session (with smoke)                 Done Screen
 ```
 
 ## Compatible Devices
@@ -61,7 +63,7 @@ Works with any heated tobacco / heat-not-burn device:
 
 1. Download `puff_pacer.fap` from [Releases](../../releases)
 2. Copy to your Flipper Zero SD card: `SD Card/apps/Tools/`
-3. Open on Flipper: `Applications → Tools → PuffPacer`
+3. Open on Flipper: `Applications → Tools → 123PuffPacer`
 
 ### Build from source
 
@@ -80,7 +82,7 @@ ufbt launch
 
 ## Usage
 
-1. Open PuffPacer from Applications → Tools
+1. Open 123PuffPacer from Applications → Tools
 2. (Optional) Go to **Settings** to adjust puff count, interval, vibration, and sound
 3. Select **Start Session**
 4. Flipper alerts you on each interval — take a puff!

@@ -15,7 +15,7 @@ static void puff_pacer_scene_main_menu_callback(void* context, uint32_t index) {
 void puff_pacer_scene_main_menu_on_enter(void* context) {
     PuffPacerApp* app = context;
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "PuffPacer");
+    submenu_set_header(app->submenu, "123PuffPacer");
     submenu_add_item(
         app->submenu,
         "Start Session",
