@@ -131,6 +131,8 @@ bool puff_pacer_scene_settings_on_event(void* context, SceneManagerEvent event) 
         app->settings.vibro_mode = PuffPacerVibroShort;
         app->settings.sound_mode = PuffPacerSoundOn;
         puff_pacer_settings_save(&app->settings);
+        // Haptic + LED feedback
+        notification_message(app->notifications, &sequence_success);
         // Re-enter scene to refresh UI
         scene_manager_previous_scene(app->scene_manager);
         scene_manager_next_scene(app->scene_manager, PuffPacerSceneSettings);
