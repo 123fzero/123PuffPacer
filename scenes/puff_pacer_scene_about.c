@@ -11,7 +11,7 @@ void puff_pacer_scene_about_on_enter(void* context) {
         0,
         128,
         64,
-        "123PuffPacer v1.1.0\n"
+        "123PuffPacer v1.1.1\n"
         "Flipper Zero puff timer\n"
         "for heated tobacco\n\n"
         "IQOS, HEETS, TEREA,\n"
