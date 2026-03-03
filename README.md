@@ -20,6 +20,10 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
 - **Backlight stays on** during active session
 - **About screen** with version info and links
 
+## Demo
+
+![123PuffPacer Demo](demo.gif)
+
 ## Screenshots
 
 ```
