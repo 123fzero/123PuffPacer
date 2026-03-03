@@ -3,7 +3,7 @@
 Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar).
 
 ## What It Does
-- Configurable puff count (8-20, default 12) and interval (10-40s, default 25s)
+- Configurable puff count (8-20, default 10) and interval (10-40s, default 30s)
 - Vibration control: Off / Short / Long
 - Sound control: Off / On
 - Smoke animation on each puff (5 seconds, procedural S-wisps on both sides)

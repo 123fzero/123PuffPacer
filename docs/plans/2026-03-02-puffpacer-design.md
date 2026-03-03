@@ -4,7 +4,7 @@ Interval puff timer for Flipper Zero, designed for heated tobacco systems (Lil S
 
 ## Requirements
 
-- Configurable puff count (8-20, default 14) and interval (15-40s, default 25s)
+- Configurable puff count (8-20, default 10) and interval (10-40s, default 30s)
 - Vibration + beep notification on each puff
 - Visual session screen: counter, countdown, elapsed time, progress bar
 - Start/pause with OK button, exit with Back
@@ -44,8 +44,8 @@ puff_pacer/
 - "Settings" → Settings scene
 
 ### 2. Settings (VariableItemList widget)
-- Puff Count: 8..20 (default 14)
-- Interval: 15..40 sec (default 25)
+- Puff Count: 8..20 (default 10)
+- Interval: 10..40 sec (default 30)
 - Changes saved immediately to SD card
 
 ### 3. Session (Custom View)
@@ -53,7 +53,7 @@ puff_pacer/
 ┌──────────────────────────┐
 │ PuffPacer    02:15       │
 │                          │
-│     Puff 3 / 14          │
+│     Puff 3 / 10          │
 │     Next in: 18s         │
 │                          │
 │  [███████░░░░░░░]        │

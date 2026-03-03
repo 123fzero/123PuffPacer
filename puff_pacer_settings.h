@@ -5,11 +5,11 @@
 
 #define PUFF_COUNT_MIN     8
 #define PUFF_COUNT_MAX     20
-#define PUFF_COUNT_DEFAULT 12
+#define PUFF_COUNT_DEFAULT 10
 
 #define INTERVAL_SEC_MIN     10
 #define INTERVAL_SEC_MAX     40
-#define INTERVAL_SEC_DEFAULT 25
+#define INTERVAL_SEC_DEFAULT 30
 
 #define SETTINGS_FILE_PATH    APP_DATA_PATH("settings.conf")
 #define SETTINGS_FILE_TYPE    "PuffPacer Settings"

@@ -95,15 +95,15 @@ git commit -m "feat: initial project scaffold with manifest and entry point"
 
 #define PUFF_COUNT_MIN 8
 #define PUFF_COUNT_MAX 20
-#define PUFF_COUNT_DEFAULT 14
+#define PUFF_COUNT_DEFAULT 10
 
-#define INTERVAL_SEC_MIN 15
+#define INTERVAL_SEC_MIN 10
 #define INTERVAL_SEC_MAX 40
-#define INTERVAL_SEC_DEFAULT 25
+#define INTERVAL_SEC_DEFAULT 30
 
 #define SETTINGS_FILE_PATH APP_DATA_PATH("settings.conf")
 #define SETTINGS_FILE_TYPE "PuffPacer Settings"
-#define SETTINGS_FILE_VERSION 1
+#define SETTINGS_FILE_VERSION 2
 
 typedef struct {
     uint32_t puff_count;
@@ -628,7 +628,7 @@ void puff_pacer_scene_settings_on_enter(void* context) {
     snprintf(buf, sizeof(buf), "%lu", (unsigned long)app->settings.puff_count);
     variable_item_set_current_value_text(item, buf);
 
-    // Interval: 15..40 sec
+    // Interval: 10..40 sec
     uint8_t interval_values = INTERVAL_SEC_MAX - INTERVAL_SEC_MIN + 1;
     item = variable_item_list_add(
         app->variable_item_list,
@@ -719,7 +719,7 @@ static void puff_session_view_draw(Canvas* canvas, void* model) {
     snprintf(time_buf, sizeof(time_buf), "%02lu:%02lu", (unsigned long)mins, (unsigned long)secs);
     canvas_draw_str_aligned(canvas, 126, 10, AlignRight, AlignBottom, time_buf);
 
-    // Puff counter: "Puff 3 / 14"
+    // Puff counter: "Puff 3 / 10"
     canvas_set_font(canvas, FontPrimary);
     char puff_buf[24];
     snprintf(

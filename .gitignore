@@ -3,3 +3,6 @@ dist/
 .clang-format
 .claude/
 *.mov
+.DS_Store
+**/.DS_Store
+._*
