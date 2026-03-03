@@ -1,15 +1,24 @@
-# 123PuffPacer — Puff Interval Timer for Flipper Zero
+# 123PuffPacer — Flipper Zero Puff Timer for IQOS, HEETS, TEREA, Lil Solid, glo, and Ploom
 
-Interval puff timer for heated tobacco devices (IQOS, Lil Solid, glo, Ploom, etc.). Helps you pace your puffs evenly throughout a session with vibration and sound alerts.
+123PuffPacer is a Flipper Zero puff timer and heated tobacco session timer for IQOS, IQOS ILUMA, HEETS, TEREA, Lil Solid, glo, Ploom, and similar heat-not-burn devices. It helps you pace your puffs evenly throughout a session with vibration and sound alerts.
 
-## Why?
+## Why Use 123PuffPacer?
 
-Heated tobacco sticks have a limited number of puffs and a fixed session time. If you puff too fast, you waste the stick. 123PuffPacer divides your session into equal intervals and alerts you when it's time for the next puff — so you get the most out of every stick.
+Heated tobacco sticks have a limited number of puffs and a fixed session time. If you puff too fast, you waste the stick. 123PuffPacer divides your session into equal intervals and alerts you when it's time for the next puff, so you get more consistent pacing from start to finish.
+
+If you are looking for an IQOS timer, HEETS timer, TEREA timer, or a Flipper Zero heated tobacco timer, this app is built for that exact use case.
+
+## Best For
+
+- **IQOS / IQOS ILUMA** session pacing
+- **HEETS / TEREA** stick timing
+- **Lil Solid, glo, and Ploom** heat-not-burn sessions
+- **Flipper Zero users** who want a simple interval-based puff timer
 
 ## Features
 
-- **Configurable puff count** — 8 to 20 puffs per session (default: 12)
-- **Configurable interval** — 10 to 40 seconds between puffs (default: 25s)
+- **Configurable puff count** — 8 to 20 puffs per session (default: 10)
+- **Configurable interval** — 10 to 40 seconds between puffs (default: 30s)
 - **Vibration control** — Off / Short / Long
 - **Sound control** — Off / On
 - **Smoke animation** — procedural smoke wisps on each puff for 5 seconds
@@ -28,8 +37,8 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
 
 ```
 ┌────────────────────────────┐   ┌────────────────────────────┐
-│      123PuffPacer          │   │ Puff Count          < 12 > │
-│                            │   │ Interval            < 25s >│
+│      123PuffPacer          │   │ Puff Count          < 10 > │
+│                            │   │ Interval            < 30s >│
 │  > Start Session           │   │ Vibration         < Short >│
 │    Settings                │   │ Sound                < On >│
 │    About                   │   │ Reset Settings              │
@@ -41,8 +50,8 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
 ┌────────────────────────────┐   ┌────────────────────────────┐
 │ 123PuffPacer       00:03   │   │                            │
 │ ~                      ~ ~ │   │                            │
-│  ~    Puff 1 / 12    ~     │   │         Session            │
-│   ~   Next in: 22s    ~    │   │        Complete!            │
+│  ~    Puff 1 / 10    ~     │   │         Session            │
+│   ~   Next in: 27s    ~    │   │        Complete!            │
 │ ~                      ~   │   │                            │
 │    [░░░░░░░░░░░░░░░]       │   │           [OK]              │
 │ [OK]=Pause    [<]=Exit     │   │                            │
@@ -50,16 +59,16 @@ Heated tobacco sticks have a limited number of puffs and a fixed session time. I
     Session (with smoke)                 Done Screen
 ```
 
-## Compatible Devices
+## Supported Heat-Not-Burn Devices
 
-Works with any heated tobacco / heat-not-burn device:
+Works with popular heated tobacco and heat-not-burn devices:
 
 - **IQOS** — ILUMA, ILUMA Prime, ILUMA One, DUO, 3
 - **Lil** — Solid 3.0, Solid 2.0, Solid EZ, Hybrid 2.0
 - **glo** — Hyper X2, Hyper+, Pro, Nano
 - **Ploom** — X Advanced, X, S
 - **Jouz** — 20, 20S, 12
-- And any similar device with timed sessions
+- And similar heated tobacco devices with fixed session timing
 
 ## Install
 

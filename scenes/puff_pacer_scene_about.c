@@ -12,8 +12,10 @@ void puff_pacer_scene_about_on_enter(void* context) {
         128,
         64,
         "123PuffPacer v1.1.0\n"
-        "Puff interval timer\n"
-        "for Flipper Zero\n\n"
+        "Flipper Zero puff timer\n"
+        "for heated tobacco\n\n"
+        "IQOS, HEETS, TEREA,\n"
+        "Lil Solid, glo, Ploom\n\n"
         "Author: 123fzero\n"
         "Year: 2026\n\n"
         "github.com/123fzero\n"

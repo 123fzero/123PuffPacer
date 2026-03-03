@@ -7,7 +7,7 @@ App(
     fap_version=(1, 1),
     fap_icon="icon.png",
     fap_category="Tools",
-    fap_description="Interval puff timer with vibration alerts",
+    fap_description="Flipper Zero puff timer for heated tobacco",
     fap_author="@colinfrl",
     requires=[
         "gui",
