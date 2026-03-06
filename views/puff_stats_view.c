@@ -271,12 +271,11 @@ static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsMod
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignBottom, title_buf);
 
-    const uint8_t chart_x = 14;
+    const uint8_t chart_x = 4;
     const uint8_t chart_y = 12;
-    const uint8_t chart_w = 100;
+    const uint8_t chart_w = 120;
     const uint8_t chart_h = 30;
-    const uint8_t bar_w = 3;
-    const uint8_t gap = 1;
+    const uint8_t bar_w = 2;
     elements_frame(canvas, chart_x, chart_y, chart_w, chart_h);
 
     for(uint8_t hour = 0; hour < 24; hour++) {
@@ -288,17 +287,19 @@ static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsMod
             }
         }
 
-        uint8_t x = chart_x + 2 + (hour * (bar_w + gap));
+        uint8_t x = chart_x + 1 + ((uint16_t)hour * (chart_w - 2 - bar_w)) / 23U;
         if(bar_height > 0) {
             canvas_draw_box(canvas, x, chart_y + chart_h - 2 - bar_height, bar_w, bar_height);
         }
     }
 
-    canvas_draw_str_aligned(canvas, chart_x + 2, 50, AlignCenter, AlignBottom, "0");
-    canvas_draw_str_aligned(canvas, chart_x + 2 + 6 * (bar_w + gap), 50, AlignCenter, AlignBottom, "6");
-    canvas_draw_str_aligned(canvas, chart_x + 2 + 12 * (bar_w + gap), 50, AlignCenter, AlignBottom, "12");
-    canvas_draw_str_aligned(canvas, chart_x + 2 + 18 * (bar_w + gap), 50, AlignCenter, AlignBottom, "18");
-    canvas_draw_str_aligned(canvas, chart_x + 2 + 23 * (bar_w + gap), 50, AlignCenter, AlignBottom, "23");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)0 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "0");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)4 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "4");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)8 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "8");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)12 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "12");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)16 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "16");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)20 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "20");
+    canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)23 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "23");
 
     char total_buf[16];
     snprintf(total_buf, sizeof(total_buf), "Count:%u", total_count);
