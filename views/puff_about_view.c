@@ -1,4 +1,5 @@
 #include "puff_about_view.h"
+#include "../puff_pacer_version.h"
 #include <gui/canvas.h>
 #include <gui/elements.h>
 #include <stdio.h>
@@ -34,7 +35,7 @@ static void puff_about_view_draw(Canvas* canvas, void* model) {
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 4, y + 18, "123PuffPacer");
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 4, y + 30, "v1.2.1");
+    canvas_draw_str(canvas, 4, y + 30, PUFF_PACER_VERSION_STR);
 
     // Keep clear white margin around QR to improve camera recognition.
     canvas_draw_box(canvas, 80, y + 8, 48, 42);
