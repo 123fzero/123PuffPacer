@@ -71,6 +71,7 @@ void puff_pacer_scene_session_on_enter(void* context) {
             m->paused = false;
             m->smoke_timer = 5;
             m->smoke_frame = 0;
+            m->language = app->settings.language;
         },
         true);
 

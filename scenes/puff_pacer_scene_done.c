@@ -1,4 +1,5 @@
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include "puff_pacer_scene.h"
 
 static void
@@ -11,12 +12,23 @@ static void
 
 void puff_pacer_scene_done_on_enter(void* context) {
     PuffPacerApp* app = context;
+    PuffPacerLanguage language = app->settings.language;
 
     widget_reset(app->widget);
     widget_add_string_multiline_element(
-        app->widget, 64, 20, AlignCenter, AlignCenter, FontPrimary, "Session\nComplete!");
+        app->widget,
+        64,
+        20,
+        AlignCenter,
+        AlignCenter,
+        FontPrimary,
+        puff_pacer_i18n(language, PuffPacerTextDoneTitle));
     widget_add_button_element(
-        app->widget, GuiButtonTypeCenter, "OK", puff_pacer_scene_done_button_callback, app);
+        app->widget,
+        GuiButtonTypeCenter,
+        puff_pacer_i18n(language, PuffPacerTextCommonOk),
+        puff_pacer_scene_done_button_callback,
+        app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, PuffPacerViewWidget);
 }

@@ -23,6 +23,7 @@ typedef enum {
     PuffPacerCustomEventResetStats,
     PuffPacerCustomEventConfirmResetStats,
     PuffPacerCustomEventCancelResetStats,
+    PuffPacerCustomEventLanguageChanged,
 } PuffPacerCustomEvent;
 
 extern const SceneManagerHandlers puff_pacer_scene_handlers;

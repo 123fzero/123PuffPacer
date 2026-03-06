@@ -1,4 +1,5 @@
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include "puff_pacer_scene.h"
 
 enum {
@@ -15,29 +16,30 @@ static void puff_pacer_scene_main_menu_callback(void* context, uint32_t index) {
 
 void puff_pacer_scene_main_menu_on_enter(void* context) {
     PuffPacerApp* app = context;
+    PuffPacerLanguage language = app->settings.language;
     submenu_reset(app->submenu);
     submenu_set_header(app->submenu, "123PuffPacer");
     submenu_add_item(
         app->submenu,
-        "Start Session",
+        puff_pacer_i18n(language, PuffPacerTextMenuStart),
         PuffPacerMainMenuIndexStart,
         puff_pacer_scene_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Settings",
+        puff_pacer_i18n(language, PuffPacerTextMenuSettings),
         PuffPacerMainMenuIndexSettings,
         puff_pacer_scene_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Statistics",
+        puff_pacer_i18n(language, PuffPacerTextMenuStatistics),
         PuffPacerMainMenuIndexStats,
         puff_pacer_scene_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "About",
+        puff_pacer_i18n(language, PuffPacerTextMenuAbout),
         PuffPacerMainMenuIndexAbout,
         puff_pacer_scene_main_menu_callback,
         app);

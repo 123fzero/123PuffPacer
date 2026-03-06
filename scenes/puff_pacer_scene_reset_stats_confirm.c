@@ -1,4 +1,5 @@
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include "puff_pacer_scene.h"
 
 static void puff_pacer_scene_reset_stats_confirm_callback(
@@ -22,22 +23,35 @@ static void puff_pacer_scene_reset_stats_confirm_callback(
 
 void puff_pacer_scene_reset_stats_confirm_on_enter(void* context) {
     PuffPacerApp* app = context;
+    PuffPacerLanguage language = app->settings.language;
 
     widget_reset(app->widget);
     widget_add_string_multiline_element(
-        app->widget, 64, 18, AlignCenter, AlignCenter, FontPrimary, "Reset\nstatistics?");
+        app->widget,
+        64,
+        18,
+        AlignCenter,
+        AlignCenter,
+        FontPrimary,
+        puff_pacer_i18n(language, PuffPacerTextResetStatsTitle));
     widget_add_string_multiline_element(
-        app->widget, 64, 42, AlignCenter, AlignCenter, FontSecondary, "This will erase\nall session logs");
+        app->widget,
+        64,
+        42,
+        AlignCenter,
+        AlignCenter,
+        FontSecondary,
+        puff_pacer_i18n(language, PuffPacerTextResetStatsBody));
     widget_add_button_element(
         app->widget,
         GuiButtonTypeLeft,
-        "No",
+        puff_pacer_i18n(language, PuffPacerTextCommonNo),
         puff_pacer_scene_reset_stats_confirm_callback,
         app);
     widget_add_button_element(
         app->widget,
         GuiButtonTypeRight,
-        "Yes",
+        puff_pacer_i18n(language, PuffPacerTextCommonYes),
         puff_pacer_scene_reset_stats_confirm_callback,
         app);
 

@@ -28,11 +28,18 @@ typedef enum {
     PuffPacerSoundCount,
 } PuffPacerSoundMode;
 
+typedef enum {
+    PuffPacerLanguageEn,
+    PuffPacerLanguageRu,
+    PuffPacerLanguageCount,
+} PuffPacerLanguage;
+
 typedef struct {
     uint32_t puff_count;
     uint32_t interval_sec;
     uint32_t vibro_mode;
     uint32_t sound_mode;
+    uint32_t language;
 } PuffPacerSettings;
 
 bool puff_pacer_settings_load(PuffPacerSettings* settings);

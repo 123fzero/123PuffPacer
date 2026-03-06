@@ -8,6 +8,7 @@ typedef struct {
     uint8_t screen;
     uint8_t log_offset;
     uint8_t day_index;
+    uint8_t language;
     uint32_t hourly_date_key;
 } PuffStatsModel;
 

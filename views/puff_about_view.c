@@ -1,4 +1,6 @@
 #include "puff_about_view.h"
+#include "../fonts/puff_pacer_font_cyrillic.h"
+#include "../puff_pacer_i18n.h"
 #include "../puff_pacer_version.h"
 #include <gui/canvas.h>
 #include <gui/elements.h>
@@ -6,10 +8,11 @@
 
 typedef struct {
     uint8_t scroll;
+    uint8_t language;
 } PuffAboutModel;
 
 static const uint8_t about_scroll_step = 6;
-static const uint8_t about_content_height = 176;
+static const uint8_t about_content_height = 200;
 
 static const uint8_t repo_qr_37x37[] = {
     0xff, 0xb0, 0xd0, 0xf3, 0x1f, 0x81, 0x34, 0x28, 0x12, 0x18, 0xbd, 0x80, 0xce, 0xd1, 0x1b, 0xbd,
@@ -26,15 +29,24 @@ static const uint8_t repo_qr_37x37[] = {
     0x84, 0xfe, 0x71, 0x02, 0xff, 0x84, 0xfe, 0x71, 0x02,
 };
 
+static void puff_about_set_text_font(Canvas* canvas, PuffPacerLanguage language, Font fallback) {
+    if(language == PuffPacerLanguageRu) {
+        canvas_set_custom_u8g2_font(canvas, puff_pacer_font_cyrillic);
+    } else {
+        canvas_set_font(canvas, fallback);
+    }
+}
+
 static void puff_about_view_draw(Canvas* canvas, void* model) {
     PuffAboutModel* m = model;
+    PuffPacerLanguage language = m->language;
     int16_t y = -(int16_t)m->scroll;
     canvas_clear(canvas);
 
     // Top section: QR first
-    canvas_set_font(canvas, FontPrimary);
+    puff_about_set_text_font(canvas, language, FontPrimary);
     canvas_draw_str(canvas, 4, y + 18, "123PuffPacer");
-    canvas_set_font(canvas, FontSecondary);
+    puff_about_set_text_font(canvas, language, FontSecondary);
     canvas_draw_str(canvas, 4, y + 30, PUFF_PACER_VERSION_STR);
 
     // Keep clear white margin around QR to improve camera recognition.
@@ -45,17 +57,20 @@ static void puff_about_view_draw(Canvas* canvas, void* model) {
     canvas_draw_xbm(canvas, 85, y + 11, 37, 37, repo_qr_37x37);
 
     // Scrollable details section
-    canvas_set_font(canvas, FontSecondary);
+    puff_about_set_text_font(canvas, language, FontSecondary);
     // Text next to QR is kept in the left column, then continues full width below QR.
-    canvas_draw_str(canvas, 2, y + 42, "Flipper Zero");
-    canvas_draw_str(canvas, 2, y + 52, "puff timer");
+    canvas_draw_str(canvas, 2, y + 42, puff_pacer_i18n(language, PuffPacerTextAboutLine1));
+    canvas_draw_str(canvas, 2, y + 52, puff_pacer_i18n(language, PuffPacerTextAboutLine2));
 
-    canvas_draw_str(canvas, 2, y + 66, "for heated tobacco");
-    canvas_draw_str(canvas, 2, y + 80, "IQOS, HEETS, TEREA,");
-    canvas_draw_str(canvas, 2, y + 96, "Lil Solid, glo, Ploom");
-    canvas_draw_str(canvas, 2, y + 110, "Author: 123fzero");
-    canvas_draw_str(canvas, 2, y + 120, "github.com/123fzero");
-    canvas_draw_str(canvas, 2, y + 130, "/123PuffPacer");
+    canvas_draw_str(canvas, 2, y + 66, puff_pacer_i18n(language, PuffPacerTextAboutLine3));
+    canvas_draw_str(canvas, 2, y + 80, puff_pacer_i18n(language, PuffPacerTextAboutLine4));
+    canvas_draw_str(canvas, 2, y + 96, puff_pacer_i18n(language, PuffPacerTextAboutLine5));
+    canvas_draw_str(canvas, 2, y + 110, puff_pacer_i18n(language, PuffPacerTextAboutLine6));
+    canvas_draw_str(canvas, 2, y + 120, puff_pacer_i18n(language, PuffPacerTextAboutLine7));
+    canvas_draw_str(canvas, 2, y + 134, puff_pacer_i18n(language, PuffPacerTextAboutLine8));
+    canvas_draw_str(canvas, 2, y + 148, puff_pacer_i18n(language, PuffPacerTextAboutLine9));
+    canvas_draw_str(canvas, 2, y + 158, puff_pacer_i18n(language, PuffPacerTextAboutLine10));
+    canvas_draw_str(canvas, 2, y + 168, puff_pacer_i18n(language, PuffPacerTextAboutLine11));
 
 }
 
@@ -98,6 +113,7 @@ View* puff_about_view_alloc(void) {
         PuffAboutModel * m,
         {
             m->scroll = 0;
+            m->language = PuffPacerLanguageEn;
         },
         true);
     view_set_draw_callback(view, puff_about_view_draw);
@@ -116,6 +132,16 @@ void puff_about_view_reset(View* view) {
         PuffAboutModel * m,
         {
             m->scroll = 0;
+        },
+        true);
+}
+
+void puff_about_view_set_language(View* view, PuffPacerLanguage language) {
+    with_view_model(
+        view,
+        PuffAboutModel * m,
+        {
+            m->language = language;
         },
         true);
 }

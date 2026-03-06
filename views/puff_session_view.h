@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../puff_pacer_settings.h"
 #include <gui/view.h>
 
 typedef struct {
@@ -10,6 +11,7 @@ typedef struct {
     bool paused;
     uint8_t smoke_timer;
     uint8_t smoke_frame;
+    uint8_t language;
 } PuffSessionModel;
 
 View* puff_session_view_alloc(void);

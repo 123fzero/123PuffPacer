@@ -1,5 +1,7 @@
 #include "puff_session_view.h"
+#include "../fonts/puff_pacer_font_cyrillic.h"
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include <gui/elements.h>
 #include <stdio.h>
 
@@ -77,6 +79,14 @@ static const SmokeWisp right_wisps[] = {
 };
 #define RIGHT_WISP_COUNT 8
 
+static void puff_session_set_text_font(Canvas* canvas, PuffPacerLanguage language, Font fallback) {
+    if(language == PuffPacerLanguageRu) {
+        canvas_set_custom_u8g2_font(canvas, puff_pacer_font_cyrillic);
+    } else {
+        canvas_set_font(canvas, fallback);
+    }
+}
+
 static void draw_wisp(Canvas* canvas, int16_t x, int16_t y, uint8_t shape) {
     const SmokePixel* pixels;
     uint8_t len;
@@ -127,10 +137,11 @@ static void draw_smoke(Canvas* canvas, uint8_t frame) {
 
 static void puff_session_view_draw(Canvas* canvas, void* model) {
     PuffSessionModel* m = model;
+    PuffPacerLanguage language = m->language;
     canvas_clear(canvas);
 
     // Header: "PuffPacer" left, elapsed time right
-    canvas_set_font(canvas, FontSecondary);
+    puff_session_set_text_font(canvas, language, FontSecondary);
     canvas_draw_str(canvas, 2, 10, "123PuffPacer");
 
     char time_buf[16];
@@ -140,23 +151,28 @@ static void puff_session_view_draw(Canvas* canvas, void* model) {
     canvas_draw_str_aligned(canvas, 126, 10, AlignRight, AlignBottom, time_buf);
 
     // Puff counter: "Puff 3 / 14"
-    canvas_set_font(canvas, FontPrimary);
+    puff_session_set_text_font(canvas, language, FontPrimary);
     char puff_buf[24];
     snprintf(
         puff_buf,
         sizeof(puff_buf),
-        "Puff %lu / %lu",
+        puff_pacer_i18n(language, PuffPacerTextSessionPuffFmt),
         (unsigned long)m->current_puff,
         (unsigned long)m->total_puffs);
     canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignBottom, puff_buf);
 
     // Countdown or PAUSED
-    canvas_set_font(canvas, FontSecondary);
+    puff_session_set_text_font(canvas, language, FontSecondary);
     if(m->paused) {
-        canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignBottom, "PAUSED");
+        canvas_draw_str_aligned(
+            canvas, 64, 40, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextSessionPaused));
     } else {
-        char next_buf[16];
-        snprintf(next_buf, sizeof(next_buf), "Next in: %lus", (unsigned long)m->seconds_remaining);
+        char next_buf[24];
+        snprintf(
+            next_buf,
+            sizeof(next_buf),
+            puff_pacer_i18n(language, PuffPacerTextSessionNextFmt),
+            (unsigned long)m->seconds_remaining);
         canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignBottom, next_buf);
     }
 
@@ -174,13 +190,14 @@ static void puff_session_view_draw(Canvas* canvas, void* model) {
     }
 
     // Hints
-    canvas_set_font(canvas, FontSecondary);
+    puff_session_set_text_font(canvas, language, FontSecondary);
     if(m->paused) {
-        canvas_draw_str(canvas, 2, 62, "[OK]=Resume");
+        canvas_draw_str(canvas, 2, 62, puff_pacer_i18n(language, PuffPacerTextSessionResumeHint));
     } else {
-        canvas_draw_str(canvas, 2, 62, "[OK]=Pause");
+        canvas_draw_str(canvas, 2, 62, puff_pacer_i18n(language, PuffPacerTextSessionPauseHint));
     }
-    canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, "[<]=Exit");
+    canvas_draw_str_aligned(
+        canvas, 126, 62, AlignRight, AlignBottom, puff_pacer_i18n(language, PuffPacerTextSessionExitHint));
 
     // Smoke animation
     if(m->smoke_timer > 0) {

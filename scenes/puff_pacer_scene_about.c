@@ -4,6 +4,7 @@
 
 void puff_pacer_scene_about_on_enter(void* context) {
     PuffPacerApp* app = context;
+    puff_about_view_set_language(app->about_view, app->settings.language);
     puff_about_view_reset(app->about_view);
     view_dispatcher_switch_to_view(app->view_dispatcher, PuffPacerViewAbout);
 }

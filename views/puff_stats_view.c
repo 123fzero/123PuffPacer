@@ -1,5 +1,7 @@
 #include "puff_stats_view.h"
+#include "../fonts/puff_pacer_font_cyrillic.h"
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include <datetime/datetime.h>
 #include <furi_hal_rtc.h>
 #include <gui/elements.h>
@@ -10,6 +12,14 @@
 #define PUFF_STATS_SCREEN_LIST  0
 #define PUFF_STATS_SCREEN_DAILY 1
 #define PUFF_STATS_SCREEN_HOURLY 2
+
+static void puff_stats_set_text_font(Canvas* canvas, PuffPacerLanguage language, Font fallback) {
+    if(language == PuffPacerLanguageRu) {
+        canvas_set_custom_u8g2_font(canvas, puff_pacer_font_cyrillic);
+    } else {
+        canvas_set_font(canvas, fallback);
+    }
+}
 
 static uint32_t puff_stats_date_key(uint16_t year, uint8_t month, uint8_t day) {
     return ((uint32_t)year * 10000U) + ((uint32_t)month * 100U) + day;
@@ -109,18 +119,21 @@ static bool puff_stats_get_recent_entry(
 }
 
 static void puff_stats_view_draw_list(Canvas* canvas, const PuffStatsModel* model) {
-    canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 10, "Statistics");
+    PuffPacerLanguage language = model->language;
+    puff_stats_set_text_font(canvas, language, FontSecondary);
+    canvas_draw_str(canvas, 2, 10, puff_pacer_i18n(language, PuffPacerTextStatsTitle));
 
     char count_buf[24];
     snprintf(count_buf, sizeof(count_buf), "S:%lu D:%lu", (unsigned long)model->stats.started_count, (unsigned long)model->stats.completed_count);
     canvas_draw_str_aligned(canvas, 126, 10, AlignRight, AlignBottom, count_buf);
 
-    canvas_set_font(canvas, FontPrimary);
+    puff_stats_set_text_font(canvas, language, FontPrimary);
     if(model->stats.log_count == 0) {
-        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignBottom, "No completed");
-        canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignBottom, "Finish one to log");
+        canvas_draw_str_aligned(
+            canvas, 64, 30, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsNoCompleted));
+        puff_stats_set_text_font(canvas, language, FontSecondary);
+        canvas_draw_str_aligned(
+            canvas, 64, 42, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsFinishOne));
     } else {
         char header_buf[24];
         uint8_t shown_from = model->log_offset + 1;
@@ -131,13 +144,13 @@ static void puff_stats_view_draw_list(Canvas* canvas, const PuffStatsModel* mode
         snprintf(
             header_buf,
             sizeof(header_buf),
-            "Log %u-%u/%lu",
+            puff_pacer_i18n(language, PuffPacerTextStatsLogFmt),
             shown_from,
             shown_to,
             (unsigned long)model->stats.log_count);
         canvas_draw_str(canvas, 2, 22, header_buf);
 
-        canvas_set_font(canvas, FontSecondary);
+        puff_stats_set_text_font(canvas, language, FontSecondary);
         for(uint8_t row = 0; row < PUFF_STATS_VISIBLE_LOGS; row++) {
             PuffPacerStatsEntry entry;
             if(!puff_stats_get_recent_entry(&model->stats, model->log_offset + row, &entry)) {
@@ -174,15 +187,18 @@ static void puff_stats_view_draw_list(Canvas* canvas, const PuffStatsModel* mode
         }
     }
 
-    canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 62, "OK Graph");
+    puff_stats_set_text_font(canvas, language, FontSecondary);
+    canvas_draw_str(canvas, 2, 62, puff_pacer_i18n(language, PuffPacerTextStatsOkGraph));
     if(model->stats.log_count > PUFF_STATS_VISIBLE_LOGS) {
-        canvas_draw_str_aligned(canvas, 64, 62, AlignCenter, AlignBottom, "^v Scroll");
+        canvas_draw_str_aligned(
+            canvas, 64, 62, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsScroll));
     }
-    canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, "< Back");
+    canvas_draw_str_aligned(
+        canvas, 126, 62, AlignRight, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsBack));
 }
 
 static void puff_stats_view_draw_daily_graph(Canvas* canvas, const PuffStatsModel* model) {
+    PuffPacerLanguage language = model->language;
     DateTime dt;
     furi_hal_rtc_get_datetime(&dt);
 
@@ -243,14 +259,16 @@ static void puff_stats_view_draw_daily_graph(Canvas* canvas, const PuffStatsMode
     snprintf(
         total_buf,
         sizeof(total_buf),
-        "D:%lu",
+        puff_pacer_i18n(language, PuffPacerTextStatsDoneFmt),
         (unsigned long)model->stats.completed_count);
-    canvas_draw_str(canvas, 2, 62, "< List");
-    canvas_draw_str_aligned(canvas, 64, 62, AlignCenter, AlignBottom, "Daily graph");
+    canvas_draw_str(canvas, 2, 62, puff_pacer_i18n(language, PuffPacerTextStatsList));
+    canvas_draw_str_aligned(
+        canvas, 64, 62, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsDaily));
     canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, total_buf);
 }
 
 static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsModel* model) {
+    PuffPacerLanguage language = model->language;
     uint8_t counts[24] = {0};
     uint8_t max_count = 1;
     uint16_t total_count = 0;
@@ -266,8 +284,13 @@ static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsMod
     uint32_t month = (model->hourly_date_key / 100U) % 100U;
     uint32_t day = model->hourly_date_key % 100U;
     char title_buf[24];
-    snprintf(title_buf, sizeof(title_buf), "%02lu.%02lu by hour", (unsigned long)day, (unsigned long)month);
-    canvas_set_font(canvas, FontSecondary);
+    snprintf(
+        title_buf,
+        sizeof(title_buf),
+        puff_pacer_i18n(language, PuffPacerTextStatsHourTitleFmt),
+        (unsigned long)day,
+        (unsigned long)month);
+    puff_stats_set_text_font(canvas, language, FontSecondary);
     canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignBottom, title_buf);
 
     const uint8_t chart_x = 4;
@@ -301,9 +324,11 @@ static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsMod
     canvas_draw_str_aligned(canvas, chart_x + 1 + ((uint16_t)23 * (chart_w - 2 - bar_w)) / 23U, 50, AlignCenter, AlignBottom, "23");
 
     char total_buf[16];
-    snprintf(total_buf, sizeof(total_buf), "Count:%u", total_count);
-    canvas_draw_str(canvas, 2, 62, "< Days");
-    canvas_draw_str_aligned(canvas, 64, 62, AlignCenter, AlignBottom, "Hourly");
+    snprintf(
+        total_buf, sizeof(total_buf), puff_pacer_i18n(language, PuffPacerTextStatsCountFmt), total_count);
+    canvas_draw_str(canvas, 2, 62, puff_pacer_i18n(language, PuffPacerTextStatsDays));
+    canvas_draw_str_aligned(
+        canvas, 64, 62, AlignCenter, AlignBottom, puff_pacer_i18n(language, PuffPacerTextStatsHourly));
     canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, total_buf);
 }
 

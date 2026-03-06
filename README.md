@@ -1,6 +1,6 @@
 # 123PuffPacer — Flipper Zero Puff Timer for IQOS, HEETS, TEREA, Lil Solid, glo, and Ploom
 
-123PuffPacer is a Flipper Zero puff timer and heated tobacco session timer for IQOS, IQOS ILUMA, HEETS, TEREA, Lil Solid, glo, Ploom, and similar heat-not-burn devices. It helps you pace your puffs evenly throughout a session with vibration and sound alerts.
+123PuffPacer is a Flipper Zero puff timer and heated tobacco session timer for IQOS, IQOS ILUMA, HEETS, TEREA, Lil Solid, glo, Ploom, and similar heat-not-burn devices. Think of it like a metronome for smokers: it helps you pace your puffs evenly throughout a session with vibration and sound alerts. The app is advisory only and does not provide medical guidance.
 
 ## Why Use 123PuffPacer?
 

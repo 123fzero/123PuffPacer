@@ -13,6 +13,7 @@ void puff_pacer_scene_stats_on_enter(void* context) {
             m->screen = 0;
             m->log_offset = 0;
             m->day_index = 6;
+            m->language = app->settings.language;
             m->hourly_date_key = 0;
         },
         true);

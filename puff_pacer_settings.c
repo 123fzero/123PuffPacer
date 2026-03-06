@@ -16,6 +16,7 @@ bool puff_pacer_settings_save(const PuffPacerSettings* settings) {
         if(!flipper_format_write_uint32(ff, "IntervalSec", &settings->interval_sec, 1)) break;
         if(!flipper_format_write_uint32(ff, "VibroMode", &settings->vibro_mode, 1)) break;
         if(!flipper_format_write_uint32(ff, "SoundMode", &settings->sound_mode, 1)) break;
+        if(!flipper_format_write_uint32(ff, "Language", &settings->language, 1)) break;
         success = true;
     } while(false);
 
@@ -29,6 +30,7 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
     settings->interval_sec = INTERVAL_SEC_DEFAULT;
     settings->vibro_mode = PuffPacerVibroShort;
     settings->sound_mode = PuffPacerSoundOn;
+    settings->language = PuffPacerLanguageEn;
 
     Storage* storage = furi_record_open(RECORD_STORAGE);
     FlipperFormat* ff = flipper_format_file_alloc(storage);
@@ -54,6 +56,7 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
         flipper_format_read_uint32(ff, "IntervalSec", &settings->interval_sec, 1);
         flipper_format_read_uint32(ff, "VibroMode", &settings->vibro_mode, 1);
         flipper_format_read_uint32(ff, "SoundMode", &settings->sound_mode, 1);
+        flipper_format_read_uint32(ff, "Language", &settings->language, 1);
 
         // Clamp to valid ranges
         if(settings->puff_count < PUFF_COUNT_MIN || settings->puff_count > PUFF_COUNT_MAX) {
@@ -68,6 +71,9 @@ bool puff_pacer_settings_load(PuffPacerSettings* settings) {
         }
         if(settings->sound_mode >= PuffPacerSoundCount) {
             settings->sound_mode = PuffPacerSoundOn;
+        }
+        if(settings->language >= PuffPacerLanguageCount) {
+            settings->language = PuffPacerLanguageEn;
         }
 
         success = true;

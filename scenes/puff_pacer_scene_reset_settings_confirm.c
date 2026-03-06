@@ -1,4 +1,5 @@
 #include "../puff_pacer_app.h"
+#include "../puff_pacer_i18n.h"
 #include "puff_pacer_scene.h"
 
 static void puff_pacer_scene_reset_settings_confirm_callback(
@@ -22,22 +23,35 @@ static void puff_pacer_scene_reset_settings_confirm_callback(
 
 void puff_pacer_scene_reset_settings_confirm_on_enter(void* context) {
     PuffPacerApp* app = context;
+    PuffPacerLanguage language = app->settings.language;
 
     widget_reset(app->widget);
     widget_add_string_multiline_element(
-        app->widget, 64, 18, AlignCenter, AlignCenter, FontPrimary, "Reset\nsettings?");
+        app->widget,
+        64,
+        18,
+        AlignCenter,
+        AlignCenter,
+        FontPrimary,
+        puff_pacer_i18n(language, PuffPacerTextResetSettingsTitle));
     widget_add_string_multiline_element(
-        app->widget, 64, 42, AlignCenter, AlignCenter, FontSecondary, "Puffs, interval,\nalerts to default");
+        app->widget,
+        64,
+        42,
+        AlignCenter,
+        AlignCenter,
+        FontSecondary,
+        puff_pacer_i18n(language, PuffPacerTextResetSettingsBody));
     widget_add_button_element(
         app->widget,
         GuiButtonTypeLeft,
-        "No",
+        puff_pacer_i18n(language, PuffPacerTextCommonNo),
         puff_pacer_scene_reset_settings_confirm_callback,
         app);
     widget_add_button_element(
         app->widget,
         GuiButtonTypeRight,
-        "Yes",
+        puff_pacer_i18n(language, PuffPacerTextCommonYes),
         puff_pacer_scene_reset_settings_confirm_callback,
         app);
 
@@ -53,6 +67,7 @@ bool puff_pacer_scene_reset_settings_confirm_on_event(void* context, SceneManage
             app->settings.interval_sec = INTERVAL_SEC_DEFAULT;
             app->settings.vibro_mode = PuffPacerVibroShort;
             app->settings.sound_mode = PuffPacerSoundOn;
+            app->settings.language = PuffPacerLanguageEn;
             puff_pacer_settings_save(&app->settings);
             notification_message(app->notifications, &sequence_success);
             scene_manager_search_and_switch_to_previous_scene(
