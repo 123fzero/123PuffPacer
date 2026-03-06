@@ -130,16 +130,7 @@ bool puff_pacer_scene_settings_on_event(void* context, SceneManagerEvent event) 
     PuffPacerApp* app = context;
     if(event.type == SceneManagerEventTypeCustom &&
        event.event == PuffPacerCustomEventResetSettings) {
-        app->settings.puff_count = PUFF_COUNT_DEFAULT;
-        app->settings.interval_sec = INTERVAL_SEC_DEFAULT;
-        app->settings.vibro_mode = PuffPacerVibroShort;
-        app->settings.sound_mode = PuffPacerSoundOn;
-        puff_pacer_settings_save(&app->settings);
-        // Haptic + LED feedback
-        notification_message(app->notifications, &sequence_success);
-        // Re-enter scene to refresh UI
-        scene_manager_previous_scene(app->scene_manager);
-        scene_manager_next_scene(app->scene_manager, PuffPacerSceneSettings);
+        scene_manager_next_scene(app->scene_manager, PuffPacerSceneResetSettingsConfirm);
         return true;
     } else if(event.type == SceneManagerEventTypeCustom &&
               event.event == PuffPacerCustomEventResetStats) {
