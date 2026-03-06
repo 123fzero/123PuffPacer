@@ -15,6 +15,7 @@ typedef enum {
     PuffPacerViewSubmenu,
     PuffPacerViewVariableItemList,
     PuffPacerViewSession,
+    PuffPacerViewStats,
     PuffPacerViewWidget,
 } PuffPacerView;
 
@@ -25,7 +26,9 @@ typedef struct {
     VariableItemList* variable_item_list;
     Widget* widget;
     View* session_view;
+    View* stats_view;
     NotificationApp* notifications;
     FuriTimer* timer;
     PuffPacerSettings settings;
+    PuffPacerStats stats;
 } PuffPacerApp;

@@ -1,6 +1,8 @@
 #include "../puff_pacer_app.h"
 #include "../views/puff_session_view.h"
 #include "puff_pacer_scene.h"
+#include <datetime/datetime.h>
+#include <furi_hal_rtc.h>
 
 // Vibration sequences
 static const NotificationSequence sequence_vibro_short = {
@@ -44,8 +46,18 @@ static void puff_pacer_session_timer_callback(void* context) {
     view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventTimerTick);
 }
 
+static void puff_pacer_session_get_datetime_keys(uint32_t* date_key, uint32_t* time_key) {
+    DateTime dt;
+    furi_hal_rtc_get_datetime(&dt);
+    *date_key = ((uint32_t)dt.year * 10000U) + ((uint32_t)dt.month * 100U) + dt.day;
+    *time_key = ((uint32_t)dt.hour * 100U) + dt.minute;
+}
+
 void puff_pacer_scene_session_on_enter(void* context) {
     PuffPacerApp* app = context;
+
+    puff_pacer_stats_log_started(&app->stats);
+    puff_pacer_stats_save(&app->stats);
 
     // Initialize session model
     with_view_model(
@@ -111,6 +123,16 @@ bool puff_pacer_scene_session_on_event(void* context, SceneManagerEvent event) {
 
             if(session_done) {
                 furi_timer_stop(app->timer);
+                uint32_t date_key;
+                uint32_t time_key;
+                puff_pacer_session_get_datetime_keys(&date_key, &time_key);
+                puff_pacer_stats_log_completed(
+                    &app->stats,
+                    date_key,
+                    time_key,
+                    app->settings.puff_count,
+                    app->settings.interval_sec);
+                puff_pacer_stats_save(&app->stats);
                 notification_message(app->notifications, &sequence_success);
                 scene_manager_next_scene(app->scene_manager, PuffPacerSceneDone);
             } else if(new_puff) {

@@ -37,3 +37,35 @@ typedef struct {
 
 bool puff_pacer_settings_load(PuffPacerSettings* settings);
 bool puff_pacer_settings_save(const PuffPacerSettings* settings);
+
+#define PUFF_PACER_STATS_MAX_LOGS 24
+
+#define STATS_FILE_PATH    APP_DATA_PATH("stats.conf")
+#define STATS_FILE_TYPE    "PuffPacer Stats"
+#define STATS_FILE_VERSION 2
+
+typedef struct {
+    uint32_t date_key;
+    uint32_t time_key;
+    uint32_t puff_count;
+    uint32_t interval_sec;
+} PuffPacerStatsEntry;
+
+typedef struct {
+    uint32_t started_count;
+    uint32_t completed_count;
+    uint32_t log_count;
+    uint32_t next_index;
+    PuffPacerStatsEntry logs[PUFF_PACER_STATS_MAX_LOGS];
+} PuffPacerStats;
+
+bool puff_pacer_stats_load(PuffPacerStats* stats);
+bool puff_pacer_stats_save(const PuffPacerStats* stats);
+void puff_pacer_stats_log_started(PuffPacerStats* stats);
+void puff_pacer_stats_log_completed(
+    PuffPacerStats* stats,
+    uint32_t date_key,
+    uint32_t time_key,
+    uint32_t puff_count,
+    uint32_t interval_sec);
+void puff_pacer_stats_reset(PuffPacerStats* stats);

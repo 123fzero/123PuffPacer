@@ -23,6 +23,11 @@ If you are looking for an IQOS timer, HEETS timer, TEREA timer, or a Flipper Zer
 - **Sound control** — Off / On
 - **Smoke animation** — procedural smoke wisps on each puff for 5 seconds
 - **Live session screen** — puff counter, countdown timer, elapsed time, progress bar
+- **Statistics dashboard** — started/completed counters and session log
+- **Session history log** — date + time + session parameters (puffs, interval)
+- **Daily graph (7 days)** — bar chart with per-day counts and day selection
+- **Hourly drill-down** — select a day and open per-hour chart for that date
+- **Safe reset statistics** — confirmation dialog before clearing stats
 - **Pause/resume** with OK button
 - **Reset settings** — one-click reset to defaults
 - **Persistent settings** — saved to SD card, remembered between launches
@@ -100,7 +105,8 @@ ufbt launch
 3. Select **Start Session**
 4. Flipper alerts you on each interval — take a puff!
 5. Press **OK** to pause/resume, **Back** to exit
-6. After all puffs — "Session Complete!" screen
+6. Use **Statistics** to view log entries and daily/hourly charts
+7. After all puffs — "Session Complete!" screen
 
 ## Controls
 
@@ -109,6 +115,16 @@ ufbt launch
 | OK | Start session / Pause / Resume |
 | Back | Go back / Exit session |
 | Left/Right | Change settings values |
+
+### Statistics Controls
+
+| Button | Action |
+|--------|--------|
+| OK (in list) | Open daily graph |
+| Left/Right (daily graph) | Select day column |
+| OK (daily graph) | Open hourly graph for selected day |
+| Back (hourly graph) | Return to daily graph |
+| Back (daily graph) | Return to statistics list |
 
 ## Tested On
 

@@ -8,6 +8,10 @@ Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar)
 - Sound control: Off / On
 - Smoke animation on each puff (5 seconds, procedural S-wisps on both sides)
 - Live session screen: puff counter, countdown, elapsed time, progress bar
+- Statistics: started/completed counters + circular session log (24 entries)
+- Log entries include date, time, puff count, and interval
+- Daily graph (7 days) + hourly drill-down for selected day
+- Reset Statistics option with confirmation dialog
 - Reset Settings option in settings menu
 - Pause/resume with OK button, exit with Back
 - Auto-stop after all puffs complete
@@ -19,11 +23,12 @@ Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar)
 - Firmware tested: Momentum mntm-012
 - Language: C
 - Architecture: ViewDispatcher + SceneManager
-- 5 scenes: MainMenu, Settings, Session, Done, About
-- Widgets: Submenu (menu), VariableItemList (settings), custom View (session), Widget (done/about)
+- 7 scenes: MainMenu, Settings, Stats, ResetStatsConfirm, Session, Done, About
+- Views: Submenu (menu), VariableItemList (settings), custom View (session), custom View (stats), Widget (done/about/confirm)
 - Timer: FuriTimer periodic 1s
 - Notifications: separate vibro and sound sequences, configurable
 - Settings: FlipperFormat v2 at /ext/apps_data/puff_pacer/settings.conf
+- Stats: FlipperFormat v2 at /ext/apps_data/puff_pacer/stats.conf
 - Category: Tools
 - appid: puff_pacer
 - Icon: 10x10 smoke cloud

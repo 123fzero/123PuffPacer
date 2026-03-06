@@ -4,6 +4,7 @@
 enum {
     PuffPacerMainMenuIndexStart,
     PuffPacerMainMenuIndexSettings,
+    PuffPacerMainMenuIndexStats,
     PuffPacerMainMenuIndexAbout,
 };
 
@@ -30,6 +31,12 @@ void puff_pacer_scene_main_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
+        "Statistics",
+        PuffPacerMainMenuIndexStats,
+        puff_pacer_scene_main_menu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
         "About",
         PuffPacerMainMenuIndexAbout,
         puff_pacer_scene_main_menu_callback,
@@ -52,6 +59,10 @@ bool puff_pacer_scene_main_menu_on_event(void* context, SceneManagerEvent event)
             break;
         case PuffPacerMainMenuIndexSettings:
             scene_manager_next_scene(app->scene_manager, PuffPacerSceneSettings);
+            consumed = true;
+            break;
+        case PuffPacerMainMenuIndexStats:
+            scene_manager_next_scene(app->scene_manager, PuffPacerSceneStats);
             consumed = true;
             break;
         case PuffPacerMainMenuIndexAbout:

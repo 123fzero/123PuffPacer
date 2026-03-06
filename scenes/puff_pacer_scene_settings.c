@@ -5,12 +5,15 @@
 static const char* const vibro_labels[] = {"Off", "Short", "Long"};
 static const char* const sound_labels[] = {"Off", "On"};
 
-#define SETTINGS_ITEM_RESET 4
+#define SETTINGS_ITEM_RESET       4
+#define SETTINGS_ITEM_RESET_STATS 5
 
 static void puff_pacer_scene_settings_enter_callback(void* context, uint32_t index) {
     PuffPacerApp* app = context;
     if(index == SETTINGS_ITEM_RESET) {
         view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventResetSettings);
+    } else if(index == SETTINGS_ITEM_RESET_STATS) {
+        view_dispatcher_send_custom_event(app->view_dispatcher, PuffPacerCustomEventResetStats);
     }
 }
 
@@ -115,6 +118,7 @@ void puff_pacer_scene_settings_on_enter(void* context) {
 
     // Reset Settings (no value options, action on OK press)
     variable_item_list_add(app->variable_item_list, "Reset Settings", 0, NULL, app);
+    variable_item_list_add(app->variable_item_list, "Reset Statistics", 0, NULL, app);
 
     variable_item_list_set_enter_callback(
         app->variable_item_list, puff_pacer_scene_settings_enter_callback, app);
@@ -136,6 +140,10 @@ bool puff_pacer_scene_settings_on_event(void* context, SceneManagerEvent event) 
         // Re-enter scene to refresh UI
         scene_manager_previous_scene(app->scene_manager);
         scene_manager_next_scene(app->scene_manager, PuffPacerSceneSettings);
+        return true;
+    } else if(event.type == SceneManagerEventTypeCustom &&
+              event.event == PuffPacerCustomEventResetStats) {
+        scene_manager_next_scene(app->scene_manager, PuffPacerSceneResetStatsConfirm);
         return true;
     }
     return false;

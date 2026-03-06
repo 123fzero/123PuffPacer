@@ -1,6 +1,7 @@
 #include "puff_pacer_app.h"
 #include "scenes/puff_pacer_scene.h"
 #include "views/puff_session_view.h"
+#include "views/puff_stats_view.h"
 
 static bool puff_pacer_custom_event_callback(void* context, uint32_t event) {
     PuffPacerApp* app = context;
@@ -17,6 +18,7 @@ static PuffPacerApp* puff_pacer_alloc(void) {
 
     // Load settings
     puff_pacer_settings_load(&app->settings);
+    puff_pacer_stats_load(&app->stats);
 
     // Scene manager
     app->scene_manager = scene_manager_alloc(&puff_pacer_scene_handlers, app);
@@ -57,6 +59,11 @@ static PuffPacerApp* puff_pacer_alloc(void) {
     view_set_context(app->session_view, app);
     view_dispatcher_add_view(app->view_dispatcher, PuffPacerViewSession, app->session_view);
 
+    // Statistics view
+    app->stats_view = puff_stats_view_alloc();
+    view_set_context(app->stats_view, app);
+    view_dispatcher_add_view(app->view_dispatcher, PuffPacerViewStats, app->stats_view);
+
     return app;
 }
 
@@ -70,6 +77,9 @@ static void puff_pacer_free(PuffPacerApp* app) {
     // Views
     view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewSession);
     puff_session_view_free(app->session_view);
+
+    view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewStats);
+    puff_stats_view_free(app->stats_view);
 
     view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewSubmenu);
     submenu_free(app->submenu);
