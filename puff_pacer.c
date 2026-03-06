@@ -1,5 +1,6 @@
 #include "puff_pacer_app.h"
 #include "scenes/puff_pacer_scene.h"
+#include "views/puff_about_view.h"
 #include "views/puff_session_view.h"
 #include "views/puff_stats_view.h"
 
@@ -64,6 +65,10 @@ static PuffPacerApp* puff_pacer_alloc(void) {
     view_set_context(app->stats_view, app);
     view_dispatcher_add_view(app->view_dispatcher, PuffPacerViewStats, app->stats_view);
 
+    // About view
+    app->about_view = puff_about_view_alloc();
+    view_dispatcher_add_view(app->view_dispatcher, PuffPacerViewAbout, app->about_view);
+
     return app;
 }
 
@@ -80,6 +85,9 @@ static void puff_pacer_free(PuffPacerApp* app) {
 
     view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewStats);
     puff_stats_view_free(app->stats_view);
+
+    view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewAbout);
+    puff_about_view_free(app->about_view);
 
     view_dispatcher_remove_view(app->view_dispatcher, PuffPacerViewSubmenu);
     submenu_free(app->submenu);

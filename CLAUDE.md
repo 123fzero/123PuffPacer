@@ -33,6 +33,8 @@ Interval puff timer for heated tobacco systems (IQOS, Lil Solid 3.0 and similar)
 - appid: puff_pacer
 - Icon: 10x10 smoke cloud
 - Versioning: semver (tag + GitHub release)
+- About screen version must always match the latest release tag
+- Before creating a release: update About version text, commit, tag, push, then create GitHub release
 
 ## Build
 ```bash

@@ -245,10 +245,9 @@ static void puff_stats_view_draw_daily_graph(Canvas* canvas, const PuffStatsMode
         sizeof(total_buf),
         "D:%lu",
         (unsigned long)model->stats.completed_count);
-    canvas_draw_str(canvas, 2, 62, "OK Hours");
+    canvas_draw_str(canvas, 2, 62, "< List");
     canvas_draw_str_aligned(canvas, 64, 62, AlignCenter, AlignBottom, "Daily graph");
-    canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, "< List");
-    canvas_draw_str_aligned(canvas, 126, 10, AlignRight, AlignBottom, total_buf);
+    canvas_draw_str_aligned(canvas, 126, 62, AlignRight, AlignBottom, total_buf);
 }
 
 static void puff_stats_view_draw_hourly_graph(Canvas* canvas, const PuffStatsModel* model) {
